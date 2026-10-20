@@ -1,0 +1,5 @@
+# Rede de segurança: o Apache deve servir só a pasta public/ (ver o README).
+# Se o projeto inteiro for copiado para o htdocs, isto bloqueia servidor/, sql/, frontend/ e docs/
+# (o public/.htaccess volta a abrir só a public/). Depende do AllowOverride: a proteção a sério
+# é o DocumentRoot (ou o Alias) apontar para a public/.
+Require all denied

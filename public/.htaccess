@@ -1,0 +1,57 @@
+# Regras do Apache (XAMPP ou alojamento) para todo o site, num só ficheiro.
+# Esta pasta (public/) é a única que o Apache serve: index.html, assets/, media/, uploads/ (imagens)
+# e os endpoints da api/. O código interno (servidor/, sql/, frontend/) fica fora dela, por isso
+# nunca chega ao browser, mesmo que o Apache ignore este ficheiro (AllowOverride None).
+# O router.php faz o mesmo quando se usa o servidor do PHP (php -S).
+
+# 0. anula o "Require all denied" do .htaccess da pasta de cima (só conta se o projeto inteiro
+#    estiver dentro do htdocs, que não é a instalação recomendada)
+Require all granted
+
+# 1. não mostrar a lista de ficheiros das pastas
+Options -Indexes
+
+# 2. cabeçalhos de segurança do site (a API acrescenta os seus em servidor/nucleo/seguranca.php)
+<IfModule mod_headers.c>
+    Header always unset X-Powered-By
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    # em HTTPS, o browser passa a recusar a versão http:// do site durante um ano
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
+</IfModule>
+
+# 3. ficheiros que nunca podem ser abertos, em qualquer pasta (não devem existir aqui,
+#    mas se alguém os copiar por engano ficam bloqueados): documentação (.md), SQL, registos (.log)
+#    e ficheiros escondidos (.htaccess, .gitignore, .env...)
+<FilesMatch "^(config\.php|config\.exemplo\.php|router\.php|.*\.md|.*\.sql|.*\.log|\..*)$">
+    Require all denied
+</FilesMatch>
+
+# compressão: html, css, js, json e svg vão comprimidos (gzip), cerca de 4x mais pequenos.
+# no XAMPP é preciso ligar o mod_deflate no httpd.conf; nos alojamentos costuma estar ligado
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>
+
+# cache: os ficheiros do build têm um hash no nome (mudam de nome a cada build), por isso ficam um ano;
+# as imagens ficam 30 dias; o index.html nunca fica em cache, para o browser apanhar logo um build novo
+<IfModule mod_headers.c>
+    <FilesMatch "\.(js|css|woff2?)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(jpe?g|png|webp|svg|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+    <FilesMatch "\.html$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>
+
+RewriteEngine On
+
+# 4. nada do que está em uploads/ pode ser executado como PHP
+RewriteRule ^uploads/.*\.(php\d?|pht|phtml|phar)(/|$) - [F,NC]

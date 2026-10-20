@@ -1,0 +1,4 @@
+# as imagens enviadas nunca podem ser executadas como PHP
+<FilesMatch "(?i)\.(php\d?|pht|phtml|phar)$">
+    Require all denied
+</FilesMatch>

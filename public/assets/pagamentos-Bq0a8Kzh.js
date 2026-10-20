@@ -1,0 +1,1 @@
+import{a as e}from"./jsx-runtime-BP_rLQlE.js";import{a as t}from"./api-C63JFZRj.js";async function n(e,n){return(await t(`pagamentos.php`,{acao:`iniciar`,tipo:e,id:n})).url}function r(t,n){if(t.startsWith(`#/`))n(t.slice(1));else if(t.startsWith(`https://`))window.location.assign(t);else throw Error(e(`pagamento.urlInvalido`))}export{r as n,n as t};

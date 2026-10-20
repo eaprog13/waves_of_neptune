@@ -1,0 +1,4 @@
+# configuração com dados de acesso (cada instalação tem a sua)
+servidor/config.php
+# emails de desenvolvimento (podem ter códigos de acesso)
+servidor/registos/*.log

@@ -1,0 +1,2 @@
+# só são incluídos por outros ficheiros PHP, nunca abertos diretamente
+Require all denied
