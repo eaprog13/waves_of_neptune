@@ -46,6 +46,8 @@ Sem Apache também funciona: abrir um terminal na pasta, correr `php -S localhos
 
 As contas novas criadas em "Criar conta" ficam como cliente. O administrador muda o papel de qualquer conta em Admin > Utilizadores.
 
+Estas três contas vêm já criadas no `sql/waves_of_neptune.sql`, com passwords curtas só para testar (as contas novas exigem pelo menos 10 caracteres). Antes de pôr o site online, mudar as passwords delas no perfil ou apagá-las.
+
 O administrador tem sempre autenticação de dois fatores: depois da password, é pedido um código de 6 algarismos enviado por email. Em desenvolvimento (`WON_EMAIL_FORNECEDOR = 'registo'`) os emails não são enviados: ficam em `servidor/registos/emails.log` (fora da `public/`, o browser não lhe chega), e é lá que se vê o código. Os clientes podem ligar a 2FA no perfil.
 
 ## Funcionalidades
@@ -153,7 +155,7 @@ waves_of_neptune/
 │   ├── GUIA.md              como usar o site (cliente e administração)
 │   ├── API.md               contrato da API (pedidos, respostas, permissões)
 │   └── ARQUITETURA.md       camadas, segurança e passos para produção
-└── sql/                     export da base de dados e migração
+└── sql/                     export da base de dados (estrutura + dados de exemplo)
 ```
 
 ## Segurança
