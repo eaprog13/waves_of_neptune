@@ -1,4 +1,4 @@
-# Waves of Neptune - Loja Oficial
+# Waves of Neptune - Ecommerce de banda.
 
 Website de e-commerce da banda Waves of Neptune. Os clientes podem ver o catálogo, pôr produtos no carrinho, fazer encomendas e pagá-las, reservar e pagar bilhetes para os concertos, acompanhar a entrega, pedir ajuda à equipa e subscrever a newsletter. A equipa gere produtos, categorias, encomendas e envios, concertos, tickets de suporte, utilizadores e a newsletter, e consulta as estatísticas de vendas.
 
