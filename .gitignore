@@ -2,3 +2,25 @@
 servidor/config.php
 # emails de desenvolvimento (podem ter códigos de acesso)
 servidor/registos/*.log
+
+# variáveis de ambiente, chaves, certificados e credenciais
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+*.p12
+*.pfx
+.npmrc
+.pgpass
+
+# dependências e builds intermédios (o build final vai para public/ e é versionado)
+node_modules/
+frontend/dist/
+
+# editor / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
